@@ -76,3 +76,17 @@ func TestRangeChanel(t *testing.T) {
 		fmt.Println(i)
 	}
 }
+
+func TestRaceCondition(t *testing.T) {
+	x := 0
+
+	for i := 0; i < 1000; i++ {
+		go func() {
+			for j := 0; j < 100; j++ {
+				x++
+			}
+		}()
+	}
+	time.Sleep(time.Second * 5)
+	fmt.Println("Counter = ", x)
+}
